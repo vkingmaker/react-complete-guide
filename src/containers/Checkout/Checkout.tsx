@@ -15,11 +15,11 @@ interface CheckoutProps {
 
 class Checkout extends Component<CheckoutProps> {
   checkoutCancelledHandler = () => {
-    this.props.history.back();
+    this.props.history.goBack();
   };
 
   checkoutContinuedHandler = () => {
-    this.props.location.replace('/checkout/contact-data');
+    this.props.history.replace('/checkout/contact-data');
   };
 
   render() {

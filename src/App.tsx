@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Dispatch, AnyAction } from 'redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
@@ -10,7 +9,6 @@ import Logout from './containers/Auth/Logout/Logout';
 import { authCheckState } from './store/actions/index';
 
 interface AppProps {
-  // onTryAutoSignup(): any;
   authCheckState: any;
 }
 
@@ -28,7 +26,7 @@ const asyncAuth = asyncComponent(() => {
 
 class _App extends Component<AppProps> {
   componentDidMount() {
-    // this.props.onTryAutoSignup();
+    this.props.authCheckState();
   }
 
   render() {

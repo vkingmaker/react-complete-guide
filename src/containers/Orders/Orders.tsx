@@ -51,13 +51,6 @@ const mapStateToProps = (state: {
   };
 };
 
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//   return {
-//     onFetchOrders: (token: string, userId: string) =>
-//       dispatch(fetchOrders(token, userId))
-//   };
-// };
-
 export default connect(
   mapStateToProps,
   { fetchOrders }

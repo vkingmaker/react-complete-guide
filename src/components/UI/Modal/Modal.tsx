@@ -9,10 +9,6 @@ interface ModalProps {
   modalClosed: any;
 }
 class Modal extends Component<ModalProps> {
-  myStyle: React.CSSProperties = {
-    transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
-    opacity: this.props.show ? 1 : 0
-  };
   shouldComponentUpdate(nextProps: any, nextState: any) {
     return (
       nextProps.show !== this.props.show ||
@@ -24,7 +20,13 @@ class Modal extends Component<ModalProps> {
     return (
       <Aux>
         <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
-        <div className={classes.Modal} style={this.myStyle}>
+        <div
+          className={classes.Modal}
+          style={{
+            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+            opacity: this.props.show ? 1 : 0
+          }}
+        >
           {this.props.children}
         </div>
       </Aux>

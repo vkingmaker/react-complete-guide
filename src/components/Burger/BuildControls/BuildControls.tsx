@@ -13,7 +13,7 @@ const controls = [
 interface BuildControlsProps {
   price: number;
   ingredientAdded: any;
-  ingredientRemoved: any;
+  ingredientRemoved(contl: any): any;
   disabled: any;
   purchasable: boolean;
   ordered: any;

@@ -6,15 +6,15 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import classes from './Auth.module.css';
-import { auth, setAuthRedirectPath } from '../../store/actions/index';
+import { Aauth, setAuthRedirectPath } from '../../store/actions/index';
 import { updateObject, checkValidity } from '../../shared/utility';
 // import { Dispatch } from 'redux';
 
 interface AuthProps {
   authRedirectPath: string;
-  buildingBurger: any;
-  onSetAuthRedirectPath: () => any;
-  onAuth: any;
+  buildingBurger: boolean;
+  setAuthRedirectPath: any;
+  Aauth(email: string, password: string, isSignup: boolean): any;
   loading: boolean;
   error: any;
   isAuthenticated: boolean;
@@ -56,7 +56,7 @@ class Auth extends Component<AuthProps> {
 
   componentDidMount() {
     if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
-      this.props.onSetAuthRedirectPath();
+      this.props.setAuthRedirectPath('/');
     }
   }
 
@@ -76,7 +76,7 @@ class Auth extends Component<AuthProps> {
 
   submitHandler = (event: any) => {
     event.preventDefault();
-    this.props.onAuth(
+    this.props.Aauth(
       this.state.controls.email.value,
       this.state.controls.password.value,
       this.state.isSignup
@@ -164,15 +164,7 @@ const mapStateToProps = (state: {
   };
 };
 
-// const mapDispatchToProps = (dispatch: Dispatch) => {
-//   return {
-//     onAuth: (email: string, password: string, isSignup: boolean) =>
-//       dispatch(actions.auth(email, password, isSignup)),
-//     onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
-//   };
-// };
-
 export default connect(
   mapStateToProps,
-  { auth, setAuthRedirectPath }
+  { Aauth, setAuthRedirectPath }
 )(Auth);

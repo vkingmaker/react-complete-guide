@@ -17,7 +17,7 @@ interface ContactDataProps {
   token: string;
   userId: string;
   price: any;
-  onOrderBurger(order: any, token: string): any;
+  purchaseBurger(order: any, token: string): any;
   loading: boolean;
 }
 class ContactData extends Component<ContactDataProps> {
@@ -124,7 +124,7 @@ class ContactData extends Component<ContactDataProps> {
       userId: this.props.userId
     };
 
-    this.props.onOrderBurger(order, this.props.token);
+    this.props.purchaseBurger(order, this.props.token);
   };
 
   inputChangedHandler = (event: any, inputIdentifier: any) => {

@@ -20,20 +20,28 @@ import axios from '../../axios-orders';
 interface BurgerBuilderProps {
   initIngredients(): () => any;
   isAuthenticated: boolean;
-  onSetAuthRedirectPath: any;
+  setAuthRedirectPath: any;
   history: any;
-  onInitPurchase: any;
-  onIngredientAdded: string;
-  onIngredientRemoved: string;
+  purchaseInit: any;
+  addIngredient: string;
+  removeIngredient: any;
   price: number;
   ings: any;
   error: any;
 }
 
-export class BurgerBuilder extends Component<BurgerBuilderProps> {
-  state = {
-    purchasing: false
-  };
+interface IState {
+  purchasing: boolean;
+}
+
+export class BurgerBuilder extends Component<BurgerBuilderProps, IState> {
+  constructor(props: BurgerBuilderProps) {
+    super(props);
+
+    this.state = {
+      purchasing: false
+    };
+  }
 
   componentDidMount() {
     this.props.initIngredients();
@@ -54,7 +62,7 @@ export class BurgerBuilder extends Component<BurgerBuilderProps> {
     if (this.props.isAuthenticated) {
       this.setState({ purchasing: true });
     } else {
-      this.props.onSetAuthRedirectPath('/checkout');
+      this.props.setAuthRedirectPath('/checkout');
       this.props.history.push('/auth');
     }
   };
@@ -64,7 +72,8 @@ export class BurgerBuilder extends Component<BurgerBuilderProps> {
   };
 
   purchaseContinueHandler = () => {
-    this.props.onInitPurchase();
+    console.log('PURCHASE INIT');
+    this.props.purchaseInit();
     this.props.history.push('/checkout');
   };
 
@@ -87,8 +96,8 @@ export class BurgerBuilder extends Component<BurgerBuilderProps> {
         <Aux>
           <Burger ingredients={this.props.ings} />
           <BuildControls
-            ingredientAdded={this.props.onIngredientAdded}
-            ingredientRemoved={this.props.onIngredientRemoved}
+            ingredientAdded={this.props.addIngredient}
+            ingredientRemoved={this.props.removeIngredient}
             disabled={disabledInfo}
             purchasable={this.updatePurchaseState(this.props.ings)}
             ordered={this.purchaseHandler}
@@ -125,6 +134,7 @@ const mapStateToProps = (state: {
   burgerBuilder: { ingredients: any; totalPrice: number; error: any };
   auth: { token: string };
 }) => {
+  console.log(state.burgerBuilder.ingredients);
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
@@ -132,16 +142,6 @@ const mapStateToProps = (state: {
     isAuthenticated: state.auth.token !== null
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
-//     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-//     onInitIngredients: () => dispatch(actions.initIngredients()),
-//     onInitPurchase: () => dispatch(actions.purchaseInit()),
-//     onSetAuthRedirectPath: path => dispatch(actions.setAuthRedirectPath(path))
-//   };
-// };
 
 export default connect(
   mapStateToProps,
